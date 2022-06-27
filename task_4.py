@@ -6,7 +6,7 @@
 
 
 
-def bananas(s, word):
+def solve(s, word):
     ret = []
 
     if word == '':
@@ -22,9 +22,10 @@ def bananas(s, word):
             else:
                 right_s_list = solve(s[si+1:], word[1:])
                 for right_s in right_s_list:
-                    result.append(left_s + right_s)
-    return result 
+                    ret.append(left_s + right_s)
+    return ret 
 
 if __name__ == '__main__':
-    for s in bananas('bbananana', 'banana'):
+    for s in solve('bbananana', 'banana'):
         print(s)
+              
