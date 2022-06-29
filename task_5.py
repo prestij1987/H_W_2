@@ -4,6 +4,56 @@
 # предел (limit), после чего попробуйте сгенерировать по порядку все числа.
 # Меньшие значения предела, которые имеют все и только простые множители простых чисел primesL.
 
+def count_find_num(primesL, limit):    
+    all_values = []
+    total = math.prod(primes_l)
+    all_values.append(total)
+    if total > limit:
+        return []
+
+    for num in primes_l:
+        for total in all_values:
+            value = num * total
+            if value <= limit and value not in all_values:
+                all_values.append(value)
+    return [len(all_values), max(all_values)]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def count_find_num(primesL, limit):
     primes = []
