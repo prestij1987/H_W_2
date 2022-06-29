@@ -13,20 +13,51 @@
 # 12! = 479001600 --> 2 trailing zeros
 
 def zeros(n):
- fact = 1
- if n == 1 or n == 0:
-  return 1
- elif n < 0:
-  return 0
- else:
-  while n > 1:
-   fact = n * fact
-   n = n - 1
-  count = 0
-  while fact >= 1:
-   if fact % 10 == 0:
-    count += 1
-    fact = fact // 10
-   else:
-    break
-  return count
+    res = 0
+    i = 5
+    
+    while n / i >= 1:
+        res += n // i
+        i *= 5
+    
+    return res
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def zeros(n):
+#  fact = 1
+#  if n == 1 or n == 0:
+#   return 1
+#  elif n < 0:
+#   return 0
+#  else:
+#   while n > 1:
+#    fact = n * fact
+#    n = n - 1
+#   count = 0
+#   while fact >= 1:
+#    if fact % 10 == 0:
+#     count += 1
+#     fact = fact // 10
+#    else:
+#     break
+#   return count
