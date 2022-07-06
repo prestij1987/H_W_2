@@ -1,15 +1,43 @@
-import ipaddress
 
 
-# """Задача № 2 Написать метод int32_to_ip, который принимает на вход 32-битное целое число
-# (integer) и возвращает строковое представление его в виде IPv4-адреса:"""
+# 2. Задача на разжатие массива. Секция статьи "2. Задача на разжатие массива."
+# У каждого фильма есть расписание, по каким дням он идёт в кинотеатрах.
+# Для эффективности дни проката хранятся периодами дат. Например, прокат фильма
+# проходит с 1 по 7 января, а потом показ возобновляется
+# с 15 января по 7 февраля:
 
-# 2149583361 ==> "128.32.10.1"
-# 32         ==> "0.0.0.32"
-# 0          ==> "0.0.0.0"
+
+from dataclasses import dataclass
+from datetime import datetime, timedelta
+from typing import Generator, List, Tuple
 
 
-def int32_to_ip(int32):
-    bin_str = f'{int32:b}'.rjust(32, '0')
-    return '.'.join([str(int(bin_str[idx:idx + 8], 2)) for idx in range(0, len(bin_str), 8)])
+@dataclass
+class Movie:
+    title: str
+    dates: List[Tuple[datetime, datetime]]
+
+    @staticmethod
+    def period_delta(date1, date2, result):
+        start = datetime.date(date1)
+        periods = (date2 - date1 + timedelta(days=1)).days
+        for day in range(periods):
+            date = (start + timedelta(days=day)).strftime('%Y-%m-%d %H:%M:%S')
+            result.append(date)
+        return result
+
+    def schedule(self) -> Generator[datetime, None, None]:
+        result = []
+        for date in self.dates:
+            self.period_delta(date[0], date[1], result)
+        for item in result:
+            yield item
+
+
+m = Movie('sw', [
+    (datetime(2020, 1, 1), datetime(2020, 1, 7)),
+    (datetime(2020, 1, 15), datetime(2020, 2, 7))
+])
+for d in m.schedule():
+    print(d)
 
