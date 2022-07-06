@@ -1,175 +1,88 @@
-Кратко Секция статьи "Кратко"
-Задачи после первой лекций. Требования к задачам:
 
-Должны проходить все тесты;
-Написаны без использования сторонних библиотек (можно внутренние, к примеру itertools);
-Код соответствует PEP8.
-Задача №1. Секция статьи "Задача №1."
-Написать метод domain_name, который вернет домен из url адреса:
 
-url = "http://github.com/carbonfive/raygun" -> domain name = "github"
-url = "http://www.zombie-bites.com"         -> domain name = "zombie-bites"
-url = "https://www.cnet.com"                -> domain name = "cnet"
 
-Скопировать
-Основа:
+1. Задача на циклический итератор. Секция статьи "1. Задача на циклический итератор."
+Надо написать класс CyclicIterator.
+Итератор должен итерироваться по итерируемому объекту
+(list, tuple, set, range, Range2, и т. д.), и когда достигнет последнего
+элемента, начинать сначала.
 
-def domain_name(url):
-  return
-
-Скопировать
-Для проверки:
-
-assert domain_name("http://google.com") == "google"
-assert domain_name("http://google.co.jp") == "google"
-assert domain_name("www.xakep.ru") == "xakep"
-assert domain_name("https://youtube.com") == "youtube"
-
-Скопировать
-Задача №2. Секция статьи "Задача №2."
-Написать метод int32_to_ip, который принимает на вход 32-битное целое число
-(integer) и возвращает строковое представление его в виде IPv4-адреса:
-
-2149583361 -> "128.32.10.1"
-32         -> "0.0.0.32"
-0          -> "0.0.0.0"
+cyclic_iterator = CyclicIterator(range(3))
+for i in cyclic_iterator:
+    print(i)
 
 Скопировать
 Основа:
 
-def int32_to_ip(int32):
-  return
+class CyclicIterator:
+    def __iter__(self):
+        pass
+
+    def __next__(self):
+        pass
 
 Скопировать
-Для проверки:
+Для проверки. Ожидаемый вывод программы:
 
-assert int32_to_ip(2154959208) == "128.114.17.104"
-assert int32_to_ip(0) == "0.0.0.0"
-assert int32_to_ip(2149583361) == "128.32.10.1"
+0
+1
+2
+0
 
-Скопировать
-Задача №3. Секция статьи "Задача №3."
-Написать метод zeros, который принимает на вход целое число (integer) и
-возвращает количество конечных нулей в факториале (N! = 1 * 2 * 3 * ... * N) заданного числа:
-
-Будьте осторожны 1000! имеет 2568 цифр.
-
-Доп. инфо: http://mathworld.wolfram.com/Factorial.html
-
-zeros(6) = 1
-# 6! = 1 * 2 * 3 * 4 * 5 * 6 = 720 --> 1 trailing zero
-
-zeros(12) = 2
-# 12! = 479001600 --> 2 trailing zeros
 
 Скопировать
+2. Задача на разжатие массива. Секция статьи "2. Задача на разжатие массива."
+У каждого фильма есть расписание, по каким дням он идёт в кинотеатрах.
+Для эффективности дни проката хранятся периодами дат. Например, прокат фильма
+проходит с 1 по 7 января, а потом показ возобновляется
+с 15 января по 7 февраля:
+
+[
+  (datetime(2020, 1, 1), datetime(2020, 1, 7)),
+  (datetime(2020, 1, 15), datetime(2020, 2, 7))
+]
+
+Скопировать
+Вам дан class Movie. Реализуйте у него метод schedule.
+Он будет генерировать дни, в которые показывают фильм.
+
 Основа:
 
-def zeros(n):
-    return 0
+from dataclasses import dataclass
+from datetime import datetime, timedelta
+from typing import Generator, List, Tuple
 
-Скопировать
-Подсказка: вы не должны вычислять факториал.
-Найдите другой способ найти количество нулей.
 
-Для проверки:
+@dataclass
+class Movie:
+    title: str
+    dates: List[Tuple[datetime, datetime]]
 
-assert zeros(0) == 0
-assert zeros(6) == 1
-assert zeros(30) == 7
+    def schedule(self) -> Generator[datetime, None, None]:
+        return []
 
-Скопировать
-Задача №4. Секция статьи "Задача №4."
-Написать метод bananas, который принимает на вход строку и
-возвращает количество слов «banana» в строке.
 
-(Используйте - для обозначения зачеркнутой буквы)
+m = Movie('sw', [
+  (datetime(2020, 1, 1), datetime(2020, 1, 7)),
+  (datetime(2020, 1, 15), datetime(2020, 2, 7))
+])
 
-Input: bbananana
+for d in m.schedule():
+    print(d)
 
-Output:
 
-b-anana--
-b-anan--a
-b-ana--na
-b-an--ana
-b-a--nana
-b---anana
--banana--
--banan--a
--bana--na
--ban--ana
--ba--nana
--b--anana
+1. Разработать программу для вычисления кратчайшего пути (https://github.com/mnv/python-basics).
 
-Скопировать
-Основа:
 
-def bananas(s) -> set:
-    result = set()
-    # Your code here!
-    return result
 
-Скопировать
-Для проверки:
+2.Разработать игру «Обратные крестики-нолики» на поле 10 x 10 с правилом «Пять в ряд» – проигрывает тот, у кого получился вертикальный, горизонтальный или диагональный ряд из пяти своих фигур (крестиков/ноликов).
 
-assert bananas("banann") == set()
-assert bananas("banana") == {"banana"}
-assert bananas("bbananana") == {"b-an--ana", "-banana--", "-b--anana", "b-a--nana", "-banan--a",
-                     "b-ana--na", "b---anana", "-bana--na", "-ba--nana", "b-anan--a",
-                     "-ban--ana", "b-anana--"}
-assert bananas("bananaaa") == {"banan-a-", "banana--", "banan--a"}
-assert bananas("bananana") == {"ban--ana", "ba--nana", "bana--na", "b--anana", "banana--", "banan--a"}
+Игра должна работать в режиме «человек против компьютера».
 
-Скопировать
-Задача №5. Секция статьи "Задача №5."
-Написать метод count_find_num, который принимает на вход список простых множителей (primesL) и целое число,
-предел (limit), после чего попробуйте сгенерировать по порядку все числа.
-Меньшие значения предела, которые имеют все и только простые множители простых чисел primesL.
+Игра может быть консольной или поддерживать графический интерфейс (будет плюсом, но не требуется).
 
-primesL = [2, 5, 7]
-limit = 500
-List of Numbers Under 500          Prime Factorization
-___________________________________________________________
-           70                         [2, 5, 7]
-          140                         [2, 2, 5, 7]
-          280                         [2, 2, 2, 5, 7]
-          350                         [2, 5, 5, 7]
-          490                         [2, 5, 7, 7]
+При разработке игры учесть принцип DRY (don’t repeat yourself) – «не повторяйся».   То есть минимизировать повторяемость кода и повысить его переиспользуемость   за счет использования функций. Функции должны иметь свою зону ответственности.
 
-Скопировать
-5 из этих чисел меньше 500, а самое большое из них 490.
 
-primesL = [2, 5, 7]
-limit = 500
-count_find_num(primesL, val) == [5, 490]
 
-Скопировать
-Основа:
 
-def count_find_num(primesL, limit):
-    # your code here
-    return []
-
-Скопировать
-Для проверки:
-
-primesL = [2, 3]
-limit = 200
-assert count_find_num(primesL, limit) == [13, 192]
-
-primesL = [2, 5]
-limit = 200
-assert count_find_num(primesL, limit) == [8, 200]
-
-primesL = [2, 3, 5]
-limit = 500
-assert count_find_num(primesL, limit) == [12, 480]
-
-primesL = [2, 3, 5]
-limit = 1000
-assert count_find_num(primesL, limit) == [19, 960]
-
-primesL = [2, 3, 47]
-limit = 200
-assert count_find_num(primesL, limit) == []
